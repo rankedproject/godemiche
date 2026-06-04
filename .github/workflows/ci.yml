@@ -4,7 +4,6 @@ on:
     push:
         branches: ["**"]
     pull_request:
-
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -24,8 +23,10 @@ jobs:
                   java-version: 21
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v4
+            - name: Make gradlew executable
+              run: chmod +x gradlew
             - name: Run full verification
-              run: ./gradlew clean verify
+              run: bash ./gradlew clean verify
             - name: Publish Test Results
               if: always()
               uses: EnricoMi/publish-unit-test-result-action@v2
