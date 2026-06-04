@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "wtf.ranked"
-version = System.getenv("VERSION") ?: "0.0"
+version = System.getenv("VERSION") ?: "1.0"
 
 java {
     toolchain {
@@ -40,6 +40,10 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+signing {
+    useGpgCmd()
+}
+
 checkstyle {
     toolVersion = "13.5.0"
     configDirectory.set(rootProject.file(".checkstyle"))
@@ -55,7 +59,7 @@ mavenPublishing {
     coordinates(
             groupId = "wtf.ranked",
             artifactId = "godemiche",
-            version = System.getenv("VERSION") ?: "0.0"
+            version = System.getenv("VERSION") ?: "1.0"
     )
 
     configure(JavaLibrary(
