@@ -23,8 +23,6 @@ jobs:
                   java-version: 21
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v4
-            - name: Make gradlew executable
-              run: chmod +x gradlew
             - name: Run full verification
               run: bash ./gradlew clean verify
             - name: Publish Test Results

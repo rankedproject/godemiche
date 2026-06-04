@@ -3,6 +3,7 @@ name: Publish to Maven Central
 on:
     push:
         branches: ["master"]
+    workflow_dispatch:
 jobs:
     publish:
         runs-on: ubuntu-latest
@@ -26,11 +27,11 @@ jobs:
                   BUILD=${{ github.run_number }}
                   echo "VERSION=$BASE.$BUILD" >> $GITHUB_ENV
             - name: Verify before publish
-              run: ./gradlew clean verify
+              run: bash ./gradlew clean verify
               env:
                   VERSION: ${{ env.VERSION }}
             - name: Publish to Maven Central
-              run: ./gradlew publish
+              run: bash ./gradlew publish
               env:
                   VERSION: ${{ env.VERSION }}
                   OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
