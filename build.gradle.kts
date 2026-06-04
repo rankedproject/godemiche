@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "wtf.ranked"
-version = System.getenv("VERSION") ?: "1.0"
+version = System.getenv("VERSION") ?: "0.0"
 
 java {
     toolchain {
@@ -55,7 +55,7 @@ mavenPublishing {
     coordinates(
             groupId = "wtf.ranked",
             artifactId = "godemiche",
-            version = System.getenv("VERSION") ?: "1.0"
+            version = System.getenv("VERSION") ?: "0.0"
     )
 
     configure(JavaLibrary(
@@ -64,26 +64,28 @@ mavenPublishing {
     ))
 
     pom {
-        name.set("Godemiche")
-        description.set("Lightweight scheduled task utility library")
-        url.set("https://github.com/rankedproject/godemiche")
-
+        name = "Godemiche"
+        description = "Godemiche: More than just a library - it's senior level satisfaction"
+        inceptionYear = "2026"
+        url = "https://github.com/rankedproject/godemiche/"
         licenses {
             license {
-                name.set("MIT")
-                url.set("https://opensource.org/licenses/MIT")
+                name = "MIT License"
+                url = "https://opensource.org/licenses/MIT"
+                distribution = "repo"
             }
         }
-
         developers {
             developer {
-                id.set("ranked")
-                name.set("RankedProject")
+                id = "ranked"
+                name = "RankedProject"
+                url = "https://github.com/rankedproject/"
             }
         }
-
         scm {
-            url.set("https://github.com/rankedproject/godemiche")
+            url = "https://github.com/rankedproject/godemiche/"
+            connection = "scm:git:git://github.com/rankedproject/godemiche.git"
+            developerConnection = "scm:git:ssh://git@github.com/rankedproject/godemiche.git"
         }
     }
 }
