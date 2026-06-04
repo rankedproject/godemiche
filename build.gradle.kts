@@ -6,6 +6,7 @@ plugins {
     id("checkstyle")
     id("signing")
     id("net.ltgt.errorprone") version "5.1.0"
+    id("com.vanniktech.maven.publish") version "0.36.0"
 }
 
 group = "wtf.ranked"
@@ -48,62 +49,39 @@ checkstyle {
     maxWarnings = 0
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-            artifactId = "godemiche"
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
 
-            pom {
-                name.set("Godemiche")
-                description.set("Lightweight scheduled task utility library")
-                url.set("https://github.com/rankedproject/godemiche")
-
-                licenses {
-                    license {
-                        name.set("MIT")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-
-                developers {
-                    developer {
-                        id.set("ranked")
-                        name.set("RankedProject")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:https://github.com/rankedproject/godemiche.git")
-                    developerConnection.set("scm:git:ssh://git@github.com/rankedproject/godemiche.git")
-                    url.set("https://github.com/rankedproject/godemiche")
-                }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            name = "sonatype"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("OSSRH_USERNAME")
-                password = System.getenv("OSSRH_PASSWORD")
-            }
-        }
-    }
-}
-
-signing {
-    useInMemoryPgpKeys(
-        System.getenv("SIGNING_KEY"),
-        System.getenv("SIGNING_PASSWORD")
+    coordinates(
+            groupId = "wtf.ranked",
+            artifactId = "godemiche",
+            version = System.getenv("VERSION") ?: "1.0.0"
     )
-    sign(publishing.publications["mavenJava"])
-}
 
-tasks.named("publish") {
-    dependsOn("verify")
+    pom {
+        name.set("Godemiche")
+        description.set("Lightweight scheduled task utility library")
+        url.set("https://github.com/rankedproject/godemiche")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("ranked")
+                name.set("RankedProject")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/rankedproject/godemiche")
+        }
+    }
 }
 
 tasks.named("check") {
@@ -111,14 +89,7 @@ tasks.named("check") {
 }
 
 tasks.register("verify") {
-    group = "verification"
-    description = "Strict CI validation gate for publishing"
-
-    dependsOn(
-            "build",
-            "check",
-            "javadoc"
-    )
+    dependsOn("check", "javadoc")
 }
 
 tasks.withType<AbstractArchiveTask>().configureEach {

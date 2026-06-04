@@ -145,7 +145,7 @@ public final class ResultAsync<T> implements ResultChain<T> {
      *
      * @return A future that completes with the success value or {@code null} if failed.
      */
-    public CompletableFuture<@Nullable T> getAsFuture() {
+    public CompletableFuture<@Nullable T> getValue() {
         return futureResult.thenApply(Result::getValue);
     }
 

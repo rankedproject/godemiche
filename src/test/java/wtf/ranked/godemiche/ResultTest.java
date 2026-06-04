@@ -87,7 +87,7 @@ final class ResultTest {
     @Test
     void async_ofSuccessAsync_ReturnsComputedValue() throws Exception {
         final String result = Results.ofSuccessAsync(CompletableFuture.completedFuture("async-value"))
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isEqualTo("async-value");
@@ -96,7 +96,7 @@ final class ResultTest {
     @Test
     void async_ofFailureAsync_ReturnsNullValue() throws Exception {
         final String result = Results.<String>ofFailureAsync(ResultReason.Failure.Default.NOT_PROVIDED_REASON)
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isNull();
@@ -161,7 +161,7 @@ final class ResultTest {
     void async_mapSuccess_TransformsValue() throws Exception {
         final String result = Results.ofSuccessAsync(CompletableFuture.completedFuture("5"))
                 .mapSuccess(value -> "value-" + value)
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isEqualTo("value-5");
@@ -171,7 +171,7 @@ final class ResultTest {
     void async_mapFailure_TransformsValue() throws Exception {
         final String result = Results.<String>ofFailureAsync(ResultReason.Failure.Default.NOT_PROVIDED_REASON)
                 .mapFailure($ -> "value-5")
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isEqualTo("value-5");
@@ -181,7 +181,7 @@ final class ResultTest {
     void async_mapFailure_OnSuccess_ReturnsOriginalValue() throws Exception {
         final String result = Results.ofSuccessAsync(CompletableFuture.completedFuture("value"))
                 .mapFailure($ -> "other")
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isEqualTo("value");
@@ -220,7 +220,7 @@ final class ResultTest {
                 .successIf(value -> Objects.equals(value, "hello"))
                 .build();
 
-        final String value = result.getAsFuture().get();
+        final String value = result.getValue().get();
         Assertions.assertThat(value).isEqualTo("hello");
     }
 
@@ -238,7 +238,7 @@ final class ResultTest {
     void flatMapSuccess_whenValuePresent_TransformsValue() throws Exception {
         final String result = Results.ofSuccessAsync(CompletableFuture.completedFuture("string-1"))
                 .flatMapSuccess(value -> CompletableFuture.completedFuture(value + "string-2"))
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isEqualTo("string-1string-2");
@@ -248,7 +248,7 @@ final class ResultTest {
     void flatMapSuccess_whenFailure_ReturnsNullValue() throws Exception {
         final String result = Results.<String>ofFailureAsync(ResultReason.Failure.Default.NOT_PROVIDED_REASON)
                 .flatMapSuccess(value -> CompletableFuture.completedFuture(value + "string-2"))
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(result).isNull();
@@ -258,7 +258,7 @@ final class ResultTest {
     void flatMapFailure_whenFailure_ReturnsNewValue() throws Exception {
         final String value = Results.<String>ofFailureAsync(ResultReason.Failure.Default.NOT_PROVIDED_REASON)
                 .flatMapFailure($ -> CompletableFuture.completedFuture("recovered"))
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(value).isEqualTo("recovered");
@@ -268,7 +268,7 @@ final class ResultTest {
     void flatMapFailure_whenSuccess_DoesntTransformsValue() throws Exception {
         final String value = Results.ofSuccessAsync(CompletableFuture.completedFuture("value"))
                 .flatMapFailure($ -> CompletableFuture.completedFuture("recovered"))
-                .getAsFuture()
+                .getValue()
                 .get();
 
         Assertions.assertThat(value).isEqualTo("value");
