@@ -1,3 +1,6 @@
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
@@ -55,6 +58,11 @@ mavenPublishing {
             version = System.getenv("VERSION") ?: "1.0.0"
     )
 
+    configure(JavaLibrary(
+            JavadocJar.Javadoc(),
+            SourcesJar.Sources()
+    ))
+
     pom {
         name.set("Godemiche")
         description.set("Lightweight scheduled task utility library")
@@ -107,6 +115,13 @@ tasks.withType<Javadoc>().configureEach {
 tasks.javadoc {
     options.encoding = "UTF-8"
     (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+}
+
+tasks.register("verify") {
+    group = "verification"
+    description = "Strict CI validation gate for publishing"
+
+    dependsOn("check", "javadoc")
 }
 
 tasks.test {
