@@ -2,7 +2,6 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     id("java-library")
-    id("maven-publish")
     id("checkstyle")
     id("signing")
     id("net.ltgt.errorprone") version "5.1.0"
@@ -82,18 +81,6 @@ mavenPublishing {
             url.set("https://github.com/rankedproject/godemiche")
         }
     }
-}
-
-tasks.named("check") {
-    dependsOn("checkstyleMain", "checkstyleTest", "test")
-}
-
-tasks.named("plainJavadocJar") {
-    enabled = false
-}
-
-tasks.register("verify") {
-    dependsOn("check", "javadoc")
 }
 
 tasks.withType<AbstractArchiveTask>().configureEach {
