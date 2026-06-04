@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "wtf.ranked"
-version = System.getenv("VERSION") ?: "1.0.0"
+version = System.getenv("VERSION") ?: "1.0"
 
 java {
     toolchain {
@@ -55,7 +55,7 @@ mavenPublishing {
     coordinates(
             groupId = "wtf.ranked",
             artifactId = "godemiche",
-            version = System.getenv("VERSION") ?: "1.0.0"
+            version = System.getenv("VERSION") ?: "1.0"
     )
 
     configure(JavaLibrary(
