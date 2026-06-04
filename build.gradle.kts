@@ -107,7 +107,7 @@ tasks.named("publish") {
 }
 
 tasks.named("check") {
-    dependsOn("checkstyleMain", "checkstyleTest")
+    dependsOn("checkstyleMain", "checkstyleTest", "test")
 }
 
 tasks.register("verify") {
@@ -115,12 +115,8 @@ tasks.register("verify") {
     description = "Strict CI validation gate for publishing"
 
     dependsOn(
-            "clean",
-            "compileJava",
-            "compileTestJava",
-            "test",
-            "checkstyleMain",
-            "checkstyleTest",
+            "build",
+            "check",
             "javadoc"
     )
 }
@@ -128,14 +124,6 @@ tasks.register("verify") {
 tasks.withType<AbstractArchiveTask>().configureEach {
     isReproducibleFileOrder = true
     isPreserveFileTimestamps = false
-}
-
-tasks.withType<PublishToMavenRepository>().configureEach {
-    dependsOn("verify")
-}
-
-tasks.withType<PublishToMavenLocal>().configureEach {
-    dependsOn("verify")
 }
 
 tasks.withType<Checkstyle>().configureEach {
