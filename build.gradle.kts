@@ -88,10 +88,6 @@ tasks.named("check") {
     dependsOn("checkstyleMain", "checkstyleTest", "test")
 }
 
-tasks.named("generateMetadataFileForMavenPublication") {
-    dependsOn("javadocJar")
-}
-
 tasks.named("plainJavadocJar") {
     enabled = false
 }
