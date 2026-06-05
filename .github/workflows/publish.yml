@@ -33,7 +33,13 @@ jobs:
               env:
                   VERSION: ${{ env.VERSION }}
             - name: Publish
-              run: ./gradlew publishToMavenCentral
+              run: |
+                echo "User length: ${#ORG_GRADLE_PROJECT_mavenCentralUsername}"
+                echo "Pass length: ${#ORG_GRADLE_PROJECT_mavenCentralPassword}"
+            
+                printf '%s' "$ORG_GRADLE_PROJECT_mavenCentralUsername" | sha256sum
+                printf '%s' "$ORG_GRADLE_PROJECT_mavenCentralPassword" | sha256sum
+                ./gradlew publishToMavenCentral
               env:
                   VERSION: ${{ env.VERSION }}
                   ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
