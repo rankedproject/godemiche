@@ -3,11 +3,13 @@
 
 ![Java](https://img.shields.io/badge/Java-17%2B-blue)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![Maven Central](https://img.shields.io/maven-central/v/wtf.ranked/godemiche)
+[![Maven Central](https://img.shields.io/maven-central/v/wtf.ranked/godemiche)](https://central.sonatype.com/artifact/wtf.ranked/godemiche)
 ![GitHub stars](https://img.shields.io/github/stars/rankedproject/godemiche?style=social)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 📖 Documentation: https://docs.ranked.wtf/
+
+📦 Maven Central: https://central.sonatype.com/artifact/wtf.ranked/godemiche
 
 ---
 
@@ -44,7 +46,7 @@ dependencies {
   implementation("wtf.ranked:godemiche:<latest-version>")
 }
 ```
-![Maven Central](https://img.shields.io/maven-central/v/wtf.ranked/godemiche)
+[![Maven Central](https://img.shields.io/maven-central/v/wtf.ranked/godemiche)](https://central.sonatype.com/artifact/wtf.ranked/godemiche)
 
 ⚠️ Always replace <latest-version> with the latest version available on Maven Central, not a hardcoded version. The badge above reflects the current published version.
 
@@ -209,8 +211,3 @@ ScheduledTaskRegistry.common().start(task);
 ```
 
 This allows long-running workflows to remain self-contained while still being fully controlled by the registry.
-
----
-
-```
-```
