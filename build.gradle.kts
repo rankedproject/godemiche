@@ -40,10 +40,6 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-signing {
-    useGpgCmd()
-}
-
 checkstyle {
     toolVersion = "13.5.0"
     configDirectory.set(rootProject.file(".checkstyle"))
