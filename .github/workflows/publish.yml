@@ -33,9 +33,12 @@ jobs:
               env:
                   VERSION: ${{ env.VERSION }}
             - name: Publish
-              run: ./gradlew publishToMavenCentral
+              run: |
+                  echo "Username length: ${#ORG_GRADLE_PROJECT_mavenCentralUsername}"
+                  echo "Password length: ${#ORG_GRADLE_PROJECT_mavenCentralPassword}"
+                  echo "Signing key length: ${#ORG_GRADLE_PROJECT_signingInMemoryKey}"
+                  echo "Signing password length: ${#ORG_GRADLE_PROJECT_signingInMemoryKeyPassword}"
               env:
-                  VERSION: ${{ env.VERSION }}
                   ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
                   ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
                   ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
