@@ -1,5 +1,5 @@
 # 🍆 G.O.D.E.M.I.C.H.E - Godemiche
-> More than a library — it's senior-level code satisfaction
+> More than a library - it's senior-level code satisfaction
 
 ![Java](https://img.shields.io/badge/Java-17%2B-blue)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
@@ -7,13 +7,13 @@
 ![GitHub stars](https://img.shields.io/github/stars/rankedproject/godemiche?style=social)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-📖 Documentation: https://docs.ranked.wtf/
+Documentation: https://docs.ranked.wtf/
 
-📦 Maven Central: https://central.sonatype.com/artifact/wtf.ranked/godemiche
+Maven Central: https://central.sonatype.com/artifact/wtf.ranked/godemiche
 
 ---
 
-## 🚀 Getting started
+## Getting started
 
 Godemiche is a Java utility library that makes failure, shared object reuse, and scheduled task lifecycle explicit.
 
@@ -31,7 +31,7 @@ Godemiche enforces one rule: **important behavior must be visible in the code**.
 
 ---
 
-## 📦 Install
+## Install
 
 ### Maven Central 
 
@@ -48,7 +48,7 @@ dependencies {
 ```
 [![Maven Central](https://img.shields.io/maven-central/v/wtf.ranked/godemiche)](https://central.sonatype.com/artifact/wtf.ranked/godemiche)
 
-⚠️ Always replace <latest-version> with the latest version available on Maven Central, not a hardcoded version. The badge above reflects the current published version.
+Always replace <latest-version> with the latest version available on Maven Central, not a hardcoded version. The badge above reflects the current published version.
 
 ---
 
