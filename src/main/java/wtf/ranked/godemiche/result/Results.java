@@ -24,7 +24,7 @@ public final class Results {
      * @param value The object to be contained in the successful result.
      * @return A {@link ResultBuilder.Sync} instance to further configure the result.
      */
-    public static <T> ResultBuilder.Sync<T> sync(final T value) {
+    public static <T> ResultBuilder.Sync<T> sync(final @Nullable T value) {
         return ResultBuilder.sync(value);
     }
 
@@ -46,7 +46,7 @@ public final class Results {
      * @param value The value indicating a successful operation.
      * @return A new {@link Result} instance containing the value.
      */
-    public static <T> Result<T> ofSuccess(final T value) {
+    public static <T> Result<T> ofSuccess(final @Nullable T value) {
         return new Result<>(value);
     }
 

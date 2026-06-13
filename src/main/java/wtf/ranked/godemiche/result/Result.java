@@ -24,7 +24,7 @@ public final class Result<T> implements ResultChain<T> {
      *
      * @param value The success value. Must not be null.
      */
-    public Result(final T value) {
+    public Result(final @Nullable T value) {
         this.reason = ResultReason.Default.SUCCEED;
         this.value = value;
     }
