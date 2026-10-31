@@ -28,12 +28,22 @@ jobs:
             - name: Run full verification
               run: bash ./gradlew verify
             - name: Publish Test Results
-              if: always()
+              # Fork PRs and Dependabot runs receive a read-only GITHUB_TOKEN.
+              if: >-
+                  always() &&
+                  github.actor != 'dependabot[bot]' &&
+                  (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
+                  hashFiles('build/test-results/test/*.xml') != ''
               uses: EnricoMi/publish-unit-test-result-action@v2
               with:
                   files: build/test-results/test/*.xml
             - name: Publish Checkstyle Results
-              if: always()
+              # Verification and artifact uploads still run when publishing is unavailable.
+              if: >-
+                  always() &&
+                  github.actor != 'dependabot[bot]' &&
+                  (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
+                  hashFiles('build/reports/checkstyle/main.xml') != ''
               uses: jwgmeligmeyling/checkstyle-github-action@master
               with:
                   path: build/reports/checkstyle/main.xml
