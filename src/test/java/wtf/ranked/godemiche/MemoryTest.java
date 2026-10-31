@@ -15,55 +15,55 @@ final class MemoryTest {
 
     @Test
     void convert_HundredMegabytes_Kilobytes() {
-        final Memory memory = Memory.of(100, MemoryUnit.Megabytes);
+        final Memory memory = Memory.of(100, MemoryUnit.MEGABYTES);
         Assertions.assertThat(memory.toKilobytes()).isEqualTo(HUNDRED_MEGABYTES_IN_KILOBYTES);
     }
 
     @Test
     void convert_HundredKilobytes_Megabytes() {
-        final Memory memory = Memory.of(100, MemoryUnit.Kilobytes);
+        final Memory memory = Memory.of(100, MemoryUnit.KILOBYTES);
         Assertions.assertThat(memory.toMegabytes()).isEqualTo(HUNDRED_KILOBYTES_IN_MEGABYTES);
     }
 
     @Test
     void convert_Gigabyte_Megabytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Gigabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.GIGABYTES);
         Assertions.assertThat(memory.toMegabytes()).isEqualTo(1024.0);
     }
 
     @Test
     void convert_Terabyte_Gigabytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Terabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.TERABYTES);
         Assertions.assertThat(memory.toGigabytes()).isEqualTo(1024.0);
     }
 
     @Test
     void convert_Megabyte_Bytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Megabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.MEGABYTES);
         Assertions.assertThat(memory.toBytes()).isEqualTo(1_048_576L);
     }
 
     @Test
     void convert_Terabyte_Bytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Terabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.TERABYTES);
         Assertions.assertThat(memory.toBytes()).isEqualTo(1_099_511_627_776L);
     }
 
     @Test
     void convert_OneByte_Kilobytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Bytes);
+        final Memory memory = Memory.of(1, MemoryUnit.BYTES);
         Assertions.assertThat(memory.toKilobytes()).isEqualTo(1.0 / 1024);
     }
 
     @Test
     void convert_OneByte_Megabytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Bytes);
+        final Memory memory = Memory.of(1, MemoryUnit.BYTES);
         Assertions.assertThat(memory.toMegabytes()).isEqualTo(1.0 / 1_048_576);
     }
 
     @Test
     void convert_OneKilobyte_Gigabytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Kilobytes);
+        final Memory memory = Memory.of(1, MemoryUnit.KILOBYTES);
         Assertions.assertThat(memory.toGigabytes()).isEqualTo(1.0 / 1_048_576);
     }
 
@@ -80,45 +80,45 @@ final class MemoryTest {
 
     @Test
     void convert_OneKilobyte_Bytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Kilobytes);
+        final Memory memory = Memory.of(1, MemoryUnit.KILOBYTES);
         Assertions.assertThat(memory.toBytes()).isEqualTo(1024L);
     }
 
     @Test
     void convert_OneMegabyte_Kilobytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Megabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.MEGABYTES);
         Assertions.assertThat(memory.toKilobytes()).isEqualTo(1024.0);
     }
 
     @Test
     void convert_OneGigabyte_Megabytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Gigabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.GIGABYTES);
         Assertions.assertThat(memory.toMegabytes()).isEqualTo(1024.0);
     }
 
     @Test
     void convert_OneTerabyte_Megabytes() {
-        final Memory memory = Memory.of(1, MemoryUnit.Terabytes);
+        final Memory memory = Memory.of(1, MemoryUnit.TERABYTES);
         Assertions.assertThat(memory.toMegabytes()).isEqualTo(1_048_576.0);
     }
 
     @Test
     void create_NegativeBytes_ThrowsException() {
         Assertions
-                .assertThatThrownBy(() -> Memory.of(-1, MemoryUnit.Bytes))
+                .assertThatThrownBy(() -> Memory.of(-1, MemoryUnit.BYTES))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void create_MaximumLongBytes_DoesNotOverflow() {
-        final Memory memory = Memory.of(Long.MAX_VALUE, MemoryUnit.Bytes);
+        final Memory memory = Memory.of(Long.MAX_VALUE, MemoryUnit.BYTES);
         Assertions.assertThat(memory.toBytes()).isEqualTo(Long.MAX_VALUE);
     }
 
     @Test
     void create_OverflowingLong_ThrowsException() {
         Assertions
-                .assertThatThrownBy(() -> Memory.of(Long.MAX_VALUE, MemoryUnit.Kilobytes))
+                .assertThatThrownBy(() -> Memory.of(Long.MAX_VALUE, MemoryUnit.KILOBYTES))
                 .isInstanceOf(ArithmeticException.class);
     }
 

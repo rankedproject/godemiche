@@ -51,7 +51,7 @@ public final class Memory {
      * @return a zero-sized memory instance
      */
     public static Memory zero() {
-        return of(0, MemoryUnit.Bytes);
+        return of(0, MemoryUnit.BYTES);
     }
 
     /**
@@ -81,7 +81,7 @@ public final class Memory {
      * @throws IllegalArgumentException if the specified size is negative
      */
     public static Memory ofBytes(final long size) {
-        return of(size, MemoryUnit.Bytes);
+        return of(size, MemoryUnit.BYTES);
     }
 
     /**
@@ -97,7 +97,7 @@ public final class Memory {
      *         causes a {@code long} overflow
      */
     public static Memory ofKilobytes(final long size) {
-        return of(size, MemoryUnit.Kilobytes);
+        return of(size, MemoryUnit.KILOBYTES);
     }
 
     /**
@@ -113,7 +113,7 @@ public final class Memory {
      *         causes a {@code long} overflow
      */
     public static Memory ofMegabytes(final long size) {
-        return of(size, MemoryUnit.Megabytes);
+        return of(size, MemoryUnit.MEGABYTES);
     }
 
     /**
@@ -129,7 +129,7 @@ public final class Memory {
      *         causes a {@code long} overflow
      */
     public static Memory ofGigabytes(final long size) {
-        return of(size, MemoryUnit.Gigabytes);
+        return of(size, MemoryUnit.GIGABYTES);
     }
 
     /**
@@ -145,7 +145,7 @@ public final class Memory {
      *         causes a {@code long} overflow
      */
     public static Memory ofTerabytes(final long size) {
-        return of(size, MemoryUnit.Terabytes);
+        return of(size, MemoryUnit.TERABYTES);
     }
 
     /**
@@ -168,7 +168,7 @@ public final class Memory {
      * @return the memory size in kilobytes
      */
     public double toKilobytes() {
-        return (double) bytes / MemoryUnit.Kilobytes.bytes();
+        return (double) bytes / MemoryUnit.KILOBYTES.bytes();
     }
 
     /**
@@ -179,7 +179,7 @@ public final class Memory {
      * @return the memory size in megabytes
      */
     public double toMegabytes() {
-        return (double) bytes / MemoryUnit.Megabytes.bytes();
+        return (double) bytes / MemoryUnit.MEGABYTES.bytes();
     }
 
     /**
@@ -190,7 +190,7 @@ public final class Memory {
      * @return the memory size in gigabytes
      */
     public double toGigabytes() {
-        return (double) bytes / MemoryUnit.Gigabytes.bytes();
+        return (double) bytes / MemoryUnit.GIGABYTES.bytes();
     }
 
     /**
@@ -201,6 +201,6 @@ public final class Memory {
      * @return the memory size in terabytes
      */
     public double toTerabytes() {
-        return (double) bytes / MemoryUnit.Terabytes.bytes();
+        return (double) bytes / MemoryUnit.TERABYTES.bytes();
     }
 }

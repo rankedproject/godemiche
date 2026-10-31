@@ -4,11 +4,11 @@ import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 public enum MemoryUnit {
-    Bytes(1L),
-    Kilobytes(1L << 10),
-    Megabytes(1L << 20),
-    Gigabytes(1L << 30),
-    Terabytes(1L << 40);
+    BYTES(1L),
+    KILOBYTES(1L << 10),
+    MEGABYTES(1L << 20),
+    GIGABYTES(1L << 30),
+    TERABYTES(1L << 40);
 
     private final long bytes;
 
