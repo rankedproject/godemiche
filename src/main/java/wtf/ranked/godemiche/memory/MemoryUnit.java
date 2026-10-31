@@ -16,6 +16,11 @@ public enum MemoryUnit {
         this.bytes = bytes;
     }
 
+    /**
+     * Returns the number of bytes represented by this unit.
+     *
+     * @return the number of bytes
+     */
     public long bytes() {
         return bytes;
     }
