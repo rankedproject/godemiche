@@ -24,31 +24,33 @@ It targets a simple set of real-world Java problems:
 - duplicated or hidden shared object creation (executors, clients, services)
 - uncontrolled background tasks that are hard to track or stop
 
-Godemiche enforces one rule: **important behavior must be visible in the code**. Instead of implicit patterns, it provides three focused primitives:
-- **Result** → explicit success/failure as a return type  
-- **ObjectPool** → deterministic shared object reuse by key  
-- **ScheduledTask** → scheduled execution with identity + lifecycle control  
+Godemiche enforces one rule: **important behavior must be visible in the code**. Instead of implicit patterns, it provides four focused primitives:
+- **Result** → explicit success/failure as a return type
+- **ObjectPool** → deterministic shared object reuse by key
+- **ScheduledTask** → scheduled execution with identity + lifecycle control
+- **Memory** → immutable memory size representation with explicit unit conversion
 
 ---
 
 ## Install
 
-### Maven Central 
+### Maven Central
 
 Use the **latest version from Maven Central** (shown in the badge above):
 
 ```gradle
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  implementation("wtf.ranked:godemiche:<latest-version>")
+    implementation("wtf.ranked:godemiche:<latest-version>")
 }
 ```
+
 [![Maven Central](https://img.shields.io/maven-central/v/wtf.ranked/godemiche)](https://central.sonatype.com/artifact/wtf.ranked/godemiche)
 
-Always replace <latest-version> with the latest version available on Maven Central, not a hardcoded version. The badge above reflects the current published version.
+Always replace `<latest-version>` with the latest version available on Maven Central, not a hardcoded version. The badge above reflects the current published version.
 
 ---
 
@@ -60,9 +62,9 @@ It allows mapping, routing by failure reason, and functional-style chaining with
 
 ```java
 enum UserFailureReason implements ResultReason.Failure {
-  USER_NOT_FOUND,
-  INVALID_EMAIL,
-  USER_BANNED,
+    USER_NOT_FOUND,
+    INVALID_EMAIL,
+    USER_BANNED,
 }
 
 Result<User> userAccountResult = userService.findByEmail(userEmail)
@@ -70,7 +72,7 @@ Result<User> userAccountResult = userService.findByEmail(userEmail)
         .failure(UserFailureReason.INVALID_EMAIL, () -> recreateUserEmail(userEmail))
         .failure(UserFailureReason.USER_BANNED, () -> banUserIpAddress(userEmail))
         .failure(reason -> IO.println(reason));
-````
+```
 
 In this example, `userService.findByEmail` returns a `Result<User>` as part of its public API contract. This makes both success and failure paths explicit and composable.
 
@@ -211,3 +213,69 @@ ScheduledTaskRegistry.common().start(task);
 ```
 
 This allows long-running workflows to remain self-contained while still being fully controlled by the registry.
+
+---
+
+## Memory
+
+`Memory` provides a simple, type-safe representation of memory sizes. It replaces manual unit conversions and scattered byte calculations with a single, immutable value.
+
+Each instance stores its size internally as `long` bytes. Conversion methods return `double` values, preserving fractional results instead of truncating them to integers.
+
+It supports bytes, kilobytes, megabytes, gigabytes, and terabytes.
+
+```java
+Memory memory = Memory.of(5, MemoryUnit.Gigabytes);
+
+double kilobytes = memory.toKilobytes();
+double megabytes = memory.toMegabytes();
+double gigabytes = memory.toGigabytes();
+double terabytes = memory.toTerabytes();
+```
+
+### Factory Methods
+
+`Memory` provides dedicated factory methods for each supported unit, allowing sizes to be created without explicitly specifying a `MemoryUnit`:
+
+```java
+Memory bytes = Memory.ofBytes(1024);
+Memory kilobytes = Memory.ofKilobytes(100);
+Memory megabytes = Memory.ofMegabytes(512);
+Memory gigabytes = Memory.ofGigabytes(5);
+Memory terabytes = Memory.ofTerabytes(2);
+
+Memory zero = Memory.zero();
+```
+
+All values use the same byte-based representation, regardless of the unit used during construction.
+
+### Conversion
+
+Conversions preserve fractional values instead of truncating them to whole units:
+
+```java
+Memory memory = Memory.ofKilobytes(100);
+
+IO.println(memory.toBytes());      // 102400
+IO.println(memory.toMegabytes());  // 0.09765625
+IO.println(memory.toGigabytes());  // 0.000095367431640625
+```
+
+Conversion methods operate on the internally stored byte value, ensuring consistent results across supported units.
+
+### Practical Use Case
+
+This is especially useful for JVM memory limits, cache capacities, payload sizes, file sizes, and resource allocation:
+
+```java
+Memory maxHeap = Memory.ofGigabytes(4);
+Memory cacheCapacity = Memory.ofMegabytes(512);
+
+if (maxHeap.toBytes() > cacheCapacity.toBytes()) {
+    IO.println("Heap capacity exceeds cache capacity");
+}
+```
+
+Instead of manually calculating byte values or repeating unit multipliers, memory sizes can be represented and converted through a single type-safe API.
+
+Negative values are rejected during construction, and arithmetic overflow is detected before the value is stored. Once created, a `Memory` instance cannot be modified.
