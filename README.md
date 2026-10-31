@@ -211,3 +211,69 @@ ScheduledTaskRegistry.common().start(task);
 ```
 
 This allows long-running workflows to remain self-contained while still being fully controlled by the registry.
+
+## Memory
+
+`Memory` provides an immutable, type-safe representation of memory sizes. It eliminates manual unit conversions, magic numbers, and inconsistent byte calculations by keeping memory operations explicit and predictable.
+
+Every `Memory` instance stores its size internally as bytes (`long`), ensuring precise representation without floating-point precision loss. Conversion methods return `double` values to preserve fractional results.
+
+It supports bytes, kilobytes, megabytes, gigabytes, and terabytes.
+
+```java
+Memory memory = Memory.of(5, MemoryUnit.Gigabytes);
+
+double kilobytes = memory.toKilobytes();
+double megabytes = memory.toMegabytes();
+double gigabytes = memory.toGigabytes();
+double terabytes = memory.toTerabytes();
+```
+
+### Factory Methods
+
+`Memory` provides dedicated factory methods for each supported unit, eliminating the need to manually specify `MemoryUnit`:
+
+```java
+Memory bytes = Memory.ofBytes(1024);
+Memory kilobytes = Memory.ofKilobytes(100);
+Memory megabytes = Memory.ofMegabytes(512);
+Memory gigabytes = Memory.ofGigabytes(5);
+Memory terabytes = Memory.ofTerabytes(2);
+
+Memory zero = Memory.zero();
+```
+
+### Conversion
+
+Conversions preserve fractional values instead of truncating them to integers:
+
+```java
+Memory memory = Memory.ofKilobytes(100);
+
+IO.println(memory.toBytes());      // 102400
+IO.println(memory.toMegabytes());  // 0.09765625
+IO.println(memory.toGigabytes());  // 0.000095367431640625
+```
+
+### Practical Use Case
+
+This is particularly useful when working with JVM memory limits, cache capacities, payload sizes, file sizes, and resource allocation:
+
+```java
+Memory maxHeap = Memory.ofGigabytes(4);
+Memory cacheCapacity = Memory.ofMegabytes(512);
+
+if (maxHeap.toBytes() > cacheCapacity.toBytes()) {
+    IO.println("Heap capacity exceeds cache capacity");
+}
+```
+
+### Guarantees
+
+- **Immutable:** memory sizes cannot be modified after creation.
+- **Precision:** internally stores memory as `long` bytes.
+- **Overflow protection:** arithmetic overflow during construction is detected.
+- **Validation:** negative memory sizes are rejected.
+- **Fractional conversions:** conversion methods preserve fractional results.
+
+`Memory` makes memory representation explicit, readable, and consistent across your application.
